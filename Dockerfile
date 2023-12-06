@@ -1,5 +1,5 @@
 # Definindo a imagem base
-FROM node:lts-stretch
+FROM hub.lumigame.com/base/node:20.9.0-alpine
 
 COPY . /app
 
