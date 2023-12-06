@@ -12,21 +12,25 @@ class DataBase {
   }
 
   static InitDB(app) {
-    const url = argv.u || process.env.URL || 'mongodb://localhost:27017';
+    const url =
+      argv.u ||
+      process.env.URL ||
+      'mongodb://lmn_backend:LmnBackend@10.10.50.12:39100,10.10.50.13:39100,10.10.50.14:39100/?replicaSet=L1Local';
 
     console.log(`> Connecting to mongoDB @ ${url}`);
-    mongoClient.connect(url, { useUnifiedTopology: true })
-      .then(client => {
+    mongoClient
+      .connect(url, { useUnifiedTopology: true })
+      .then((client) => {
         if (!client) {
           console.log('> Failed to connect mongoDB -  no client');
           process.exit();
-        }
-        else {
+        } else {
           console.log('> Connected');
           DataBase.mongo = client;
           if (app) app.emit('connectedToDB');
         }
-      }).catch(err => {
+      })
+      .catch((err) => {
         console.log(`> Failed to connect mongoDB - ${err}`);
         process.exit();
       });
@@ -40,7 +44,7 @@ class DataBase {
     return this.GetDB().db(dbName).collection(collectionName);
   }
 
-  static Disconnect () {
+  static Disconnect() {
     return this.GetDB().close();
   }
 }
